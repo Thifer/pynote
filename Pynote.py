@@ -1,15 +1,6 @@
 from datetime import datetime
 import csv
 
-# TODO Приложение должно запускаться без ошибок DONE
-# TODO должно уметь сохранять данныев файл DONE
-# TODO уметь читать данные из файла, DONE
-# TODO делать выборку по дате,
-# TODO выводить на экран выбранную запись DONE
-# TODO выводить на экран весь список записок DONE
-# TODO добавлятьзаписку DONE
-# TODO редактировать ее DONE
-# TODO удалять.DONE
 notehead: str
 note: str
 date: datetime
