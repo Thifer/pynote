@@ -1,11 +1,7 @@
 from datetime import datetime
 import csv
 
-notehead: str
-note: str
-date: datetime
-filename: str
-filename = 'note.csv'
+FILENAME = 'note.csv'
 notes: list
 
 
@@ -28,13 +24,13 @@ def deletenote():
 
 
 def writenote():
-    with open(filename, 'w', newline='') as f:
+    with open(FILENAME, 'w', newline='') as f:
         writer = csv.writer(f, delimiter=';')
         writer.writerows(notes)
 
 
 def readnote():
-    with open(filename, 'r', newline='') as f:
+    with open(FILENAME, 'r', newline='') as f:
         reader = csv.reader(f, delimiter=';')
         return list(reader)
 
@@ -53,19 +49,17 @@ def noteedit():
     print("1.Имя")
     print("2.Саму заметку")
     secondanswer = int(input("Введите ваш ответ: "))
-    if secondanswer - 1 >= 2:
+    if secondanswer != 1 | secondanswer != 2:
         print("Неверный ввод")
         return
-    editlist = readnote()
-    if secondanswer - 1 == 0:
-        editlist[answer - 1][secondanswer - 1] = input("Введите новый текст: ")
+    notes[answer - 1][secondanswer - 1] = input("Введите новый текст: ")
 
 
 def printallnotes():
-    for note in notes:
-        print(f"Имя заметки:{note[0]}")
-        print(f"Время создания заметки:{note[2]}")
-        print(f"Заметка:{note[1]}")
+    for i in notes:
+        print(f"Имя заметки:{i[0]}")
+        print(f"Время создания заметки:{i[2]}")
+        print(f"Заметка:{i[1]}")
         print("==========")
 
 
@@ -89,7 +83,6 @@ def menu():
     print("4.Прочитать все заметки")
     print("5.Удалить заметку")
     print("exit - для выхода")
-    print("Любой другой ввод - для выхода")
     answer = input("Ответ: ")
     if answer == "1":
         newnote()
@@ -102,7 +95,7 @@ def menu():
     elif answer == "5":
         deletenote()
     elif answer == "exit":
-        print("Досвидания")
+        print("До свидания")
         return
     else:
         menu()
