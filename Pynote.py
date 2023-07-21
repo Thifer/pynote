@@ -38,12 +38,24 @@ def readnote():
         return list(reader)
 
 
+def printnote():
+    notes = readnote()
+    count = 0
+    print("Какую заметку вывести?")
+    for row in notes:
+        print(f"{(count+1)}. {row[0]}")
+        count += 1
+    answer = input("Вао ответ: ")
+    if(int(answer)>0)&(int(answer)<=count+1):
+        print(notes[int(answer)-1][1])
+
 def menu():
     print("Добро пожаловать в меню заметок")
     print("Пожалуйста, выберете действие")
     print("1.Создать заметку")
     print("2.Редактировать заметку")
     print("3.Найти заметку")
+    print('4.Прочитать заметку')
     print("Любой другой ввод - для выхода")
     asnwer = int(input("Ответ: "))
     if asnwer == 1:
@@ -52,6 +64,8 @@ def menu():
         changenote()
     elif asnwer == 3:
         findnote()
+    elif asnwer == 4:
+        printnote()
     else:
         print("Досвидания")
 
