@@ -6,6 +6,7 @@ note: str
 date: datetime
 filename: str
 filename = 'note.csv'
+notes: list
 
 
 def newnote():
@@ -13,30 +14,23 @@ def newnote():
     note = input("Введите заметку: ")
     date = datetime.now()
     fullnote = [notehead, note, date]
-    writenote(fullnote)
+    notes.append(fullnote)
 
 
 def deletenote():
-    notes = readnote()
     count = 0
     print("Какую заметку удалить???")
     for row in notes:
         print(f"{(count + 1)}. {row[0]}")
         count += 1
     answer = int(input("Ваш ответ?: "))
-    notes.remove(notes[answer-1])
+    notes.remove(notes[answer - 1])
+
+
+def writenote():
     with open(filename, 'w', newline='') as f:
         writer = csv.writer(f, delimiter=';')
         writer.writerows(notes)
-
-
-
-def writenote(fullnote: list):
-    notes = readnote()
-    with open(filename, 'w', newline='') as f:
-        writer = csv.writer(f, delimiter=';')
-        writer.writerows(notes)
-        writer.writerow(fullnote)
 
 
 def readnote():
@@ -46,7 +40,6 @@ def readnote():
 
 
 def noteedit():
-    notes = readnote()
     count = 0
     print("Какую заметку редактировать??")
     for row in notes:
@@ -60,18 +53,15 @@ def noteedit():
     print("1.Имя")
     print("2.Саму заметку")
     secondanswer = int(input("Введите ваш ответ: "))
-    if secondanswer-1 >= 2:
+    if secondanswer - 1 >= 2:
         print("Неверный ввод")
         return
     editlist = readnote()
-    if secondanswer-1 == 0:
-        editlist[answer-1][secondanswer-1] = input("Введите новый текст: ")
-        with open(filename, 'w', newline='') as f:
-            writer = csv.writer(f, delimiter=';')
-            writer.writerows(editlist)
+    if secondanswer - 1 == 0:
+        editlist[answer - 1][secondanswer - 1] = input("Введите новый текст: ")
+
 
 def printallnotes():
-    notes = readnote()
     for note in notes:
         print(f"Имя заметки:{note[0]}")
         print(f"Время создания заметки:{note[2]}")
@@ -80,7 +70,6 @@ def printallnotes():
 
 
 def printnote():
-    notes = readnote()
     count = 0
     print("Какую заметку вывести?")
     for row in notes:
@@ -99,21 +88,27 @@ def menu():
     print('3.Прочитать заметку')
     print("4.Прочитать все заметки")
     print("5.Удалить заметку")
+    print("exit - для выхода")
     print("Любой другой ввод - для выхода")
-    asnwer = input("Ответ: ")
-    if asnwer == "1":
+    answer = input("Ответ: ")
+    if answer == "1":
         newnote()
-    elif asnwer == "2":
+    elif answer == "2":
         noteedit()
-    elif asnwer == "3":
+    elif answer == "3":
         printnote()
-    elif asnwer == "4":
+    elif answer == "4":
         printallnotes()
-    elif asnwer == "5":
+    elif answer == "5":
         deletenote()
-    else:
+    elif answer == "exit":
         print("Досвидания")
+        return
+    else:
+        menu()
 
 
 if __name__ == '__main__':
+    notes = readnote()
     menu()
+    writenote()
